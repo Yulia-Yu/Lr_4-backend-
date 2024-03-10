@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="library.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Lr_4_1</title>
+    {% macro render_table(table_name, relation) %}
+      <div>
+       <p>
+           <b>{{table_name}} </b>
+       </p>
+       <!-- количество строк в таблице -->
+       {% set n = len(relation) %}
+       <table>
+            <!-- формируем заголовок таблицы (имена столбцов) -->
+            <tr>
+                {% for name in relation.dtypes.index %}
+                      <th>{{name}}</th>
+                 {% endfor %}
+            </tr>
+
+            <tbody>
+            <!-- для всех строк таблицы -->
+            {% for i in range(n) %}
+            <tr>
+            <!-- выводим значение каждого столбца -->
+            {% for name in relation.dtypes.index %}
+            <td> {{ relation.loc[i, name] }} </td>
+            {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+       </table>
+      </div>
+    {% endmacro%}
+</head>
+<body>
+     {{render_table(name_1, relation_1)}}
+     {{render_table(name_2, relation_2)}}
+     {{render_table(name_3, relation_3)}}
+     {{render_table(name_4, relation_4)}}
+     {{render_table(name_5, relation_5)}}
+     {{render_table(name_6, relation_6)}}
+     {{render_table(name_7, relation_7)}}
+</body>
+</html>
+
+</body>
+</html>

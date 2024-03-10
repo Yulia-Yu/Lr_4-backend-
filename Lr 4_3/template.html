@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="booking.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Бронирование номера</title>
+        {% macro render_table(table_name, relation) %}
+      <div>
+       <p>
+           <b>{{table_name}} </b>
+       </p>
+       <!-- количество строк в таблице -->
+       {% set n = len(relation) %}
+       <table>
+            <!-- формируем заголовок таблицы (имена столбцов) -->
+            <tr>
+                {% for name in relation.dtypes.index %}
+                      <th>{{name}}</th>
+                 {% endfor %}
+            </tr>
+
+            <tbody>
+            <!-- для всех строк таблицы -->
+            {% for i in range(n) %}
+            <tr>
+            <!-- выводим значение каждого столбца -->
+            {% for name in relation.dtypes.index %}
+            <td> {{ relation.loc[i, name] }} </td>
+            {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+       </table>
+      </div>
+    {% endmacro%}
+
+        {% macro render_form_1(combo_box) %}
+             <form>
+             Этаж:
+             <!-- Создаем поле со списком -->
+             <select name="room_name">
+             {% set n = len(combo_box) %}
+             -->
+             {% for i in range(n) %}
+               {% set id_r = combo_box.loc[i, "room_et"] %}
+               {% if id_r == room_et %}
+                 <option selected value={{id_r}}>
+               {% else %}
+                 <option value={{id_r}}>
+               {% endif %}
+               {{ combo_box.loc[i, "room_et"] }}
+               </option>
+             {% endfor %}
+             </select>
+
+             </form>
+    {% endmacro %}
+
+    {% macro render_form_2(combo_box) %}
+             <form>
+             Тип_номера:
+             <!-- Создаем поле со списком -->
+             <select name="type_room_name">
+             {% set n = len(combo_box) %}
+             {% for i in range(n) %}
+               {% set id_r = combo_box.loc[i, "type_room_id"] %}
+               {% if id_r == type_room_id %}
+                 <option selected value={{id_r}}>
+               {% else %}
+                 <option value={{id_r}}>
+               {% endif %}
+               {{ combo_box.loc[i, "type_room_name"] }}
+               </option>
+             {% endfor %}
+             </select>
+
+             <input type="submit" value="Найти">
+             </form>
+    {% endmacro %}
+
+</head>
+<body>
+    <p>
+        {{render_form_1(combo_box)}}
+        {{render_form_2(combo_box_1)}}
+    </p>
+    {{ render_table("Номера", relation) }}
+</body>
+</html>
